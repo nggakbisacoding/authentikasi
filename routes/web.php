@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginRegisterController;
 use App\Http\Controllers\web_controller;
 use App\Http\Controllers\CVController;
+use App\Http\Controllers\SendEmailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,9 @@ use App\Http\Controllers\CVController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/send-mail', [SendEmailController::class, 'index'])->name('kirim-email');
+Route::post('/post-email', [SendEmailController::class, 'store'])->name('post-email');
 
 Route::controller(LoginRegisterController::class)->group(function() {
     Route::get('/register', 'register')->name('register');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\datacvs;
+use App\Jobs\SendMailJob;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,7 +52,17 @@ class LoginRegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-
+        $body = "Selamat datang di website kami $request->name, silahkan login untuk melanjutkan <br>
+        email : $request->email <br>
+        password : $request->password <br>
+        Kamu dapat mereset password jika lupa di halaman login";
+        $data = [
+            'subject' => 'Selamat datang di website kami',
+            'name' => $request->name,
+            'email' => $request->email,
+            'body' => $body
+        ];
+        dispatch(new SendMailJob($data));
         $credentials = $request->only('email', 'password');
         Auth::attempt($credentials);
         $request->session()->regenerate();
