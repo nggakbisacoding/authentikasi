@@ -52,9 +52,9 @@ class LoginRegisterController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password)
         ]);
-        $body = "Selamat datang di website kami $request->name, silahkan login untuk melanjutkan <br>
-        email : $request->email <br>
-        password : $request->password <br>
+        $body = "Selamat datang di website kami $request->name, silahkan login untuk melanjutkan
+        email : $request->email 
+        password : $request->password
         Kamu dapat mereset password jika lupa di halaman login";
         $data = [
             'subject' => 'Selamat datang di website kami',
@@ -66,8 +66,7 @@ class LoginRegisterController extends Controller
         $credentials = $request->only('email', 'password');
         Auth::attempt($credentials);
         $request->session()->regenerate();
-        return redirect()->route('dashboard')
-            ->withSuccess('You have successfully registered & logged in!');
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -111,8 +110,10 @@ class LoginRegisterController extends Controller
      */
     public function dashboard()
     {
+        
         if (Auth::check()) {
-            return view('home2');
+            $name = Auth::user()->name;
+            return view('home2', compact('name'));
         }
 
         return redirect()->route('login')

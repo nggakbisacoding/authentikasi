@@ -39,10 +39,13 @@
     <section id="data-diri">
 
         <div id="container-1">
-
             <div id="content1-kiri">
                     <h4>Hello, </h4>
-                    <h1>I'm Fajar Wahyu Nugroho </h1>
+                    @if ($name)
+                    <h1>I'm {{ $name }} </h1>
+                    @else
+                    <h1>I'm Guest </h1>
+                    @endif
                     <p>Software Engineering Student </p>
 
                 <div class="d-block p-2  start-50 top-0">
