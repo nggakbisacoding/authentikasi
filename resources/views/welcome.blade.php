@@ -1,4 +1,4 @@
 <?php
-header("Location: /login");
+header("Location: { route('login') }");
 exit();
 ?>
